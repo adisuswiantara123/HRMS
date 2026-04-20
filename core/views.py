@@ -67,8 +67,11 @@ class DepartmentListView(LoginRequiredMixin, ListView):
 
 @login_required
 def export_employees_csv(request):
-    response = HttpResponse(content_type='text/csv')
+    response = HttpResponse(content_type='text/csv; charset=utf-8')
     response['Content-Disposition'] = 'attachment; filename="employees.csv"'
+    
+    # Add BOM for Excel compatibility
+    response.write(u'\ufeff'.encode('utf8'))
     
     writer = csv.writer(response)
     writer.writerow(['Full Name', 'Email', 'Phone', 'Department', 'Date Joined', 'Status'])
@@ -101,8 +104,11 @@ def export_employees_csv(request):
 
 @login_required
 def export_departments_csv(request):
-    response = HttpResponse(content_type='text/csv')
+    response = HttpResponse(content_type='text/csv; charset=utf-8')
     response['Content-Disposition'] = 'attachment; filename="departments.csv"'
+    
+    # Add BOM for Excel compatibility
+    response.write(u'\ufeff'.encode('utf8'))
     
     writer = csv.writer(response)
     writer.writerow(['Name', 'Description'])
