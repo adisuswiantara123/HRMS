@@ -90,9 +90,40 @@
             <span class="input-group-text bg-transparent border-0"><i class="fas fa-search text-muted"></i></span>
             <input type="text" class="form-control bg-transparent border-0" placeholder="Search data...">
           </div>
-          <button class="btn btn-white shadow-sm rounded-circle p-3 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
-            <i class="fas fa-bell text-primary"></i>
-          </button>
+          <div class="dropdown">
+            <button class="btn btn-white shadow-sm rounded-circle p-3 d-flex align-items-center justify-content-center position-relative" style="width: 48px; height: 48px;" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-bell text-primary"></i>
+              <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
+                <span class="visually-hidden">New alerts</span>
+              </span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2" style="width: 320px; border-radius: 12px;">
+              <li><h6 class="dropdown-header fw-bold text-dark">Notifications</h6></li>
+              <li>
+                <a class="dropdown-item py-2 border-bottom" href="#">
+                  <div class="d-flex align-items-start">
+                    <div class="bg-primary-subtle text-primary rounded-circle p-2 me-3"><i class="fas fa-calendar-alt"></i></div>
+                    <div>
+                      <p class="mb-0 fw-medium small">New Leave Request</p>
+                      <small class="text-muted" style="font-size: 0.75rem;">Budi Santoso wants 3 days off.</small>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item py-2 border-bottom" href="#">
+                  <div class="d-flex align-items-start">
+                    <div class="bg-success-subtle text-success rounded-circle p-2 me-3"><i class="fas fa-check-circle"></i></div>
+                    <div>
+                      <p class="mb-0 fw-medium small">Payroll Approved</p>
+                      <small class="text-muted" style="font-size: 0.75rem;">Finance approved May payroll.</small>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li><a class="dropdown-item text-center small py-2 fw-bold text-primary" href="#">View All Notifications</a></li>
+            </ul>
+          </div>
         </div>
       </header>
 
