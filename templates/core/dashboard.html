@@ -1,0 +1,153 @@
+{% extends 'base.html' %} 
+
+{% block title %}Dashboard Overview - HRMS{% endblock %}
+{% block page_title %}Dashboard Overview{% endblock %}
+
+{% block content %}
+<!-- Stats Cards - Premium Overhaul -->
+<div class="row g-4 mb-5">
+  <div class="col-xl-3 col-md-6">
+    <div class="card h-100 border-0 p-3">
+      <div class="card-body">
+        <div class="icon-box bg-primary-subtle text-primary">
+          <i class="fas fa-users-viewfinder"></i>
+        </div>
+        <h6 class="text-muted small fw-bold text-uppercase mb-2">Total Employees</h6>
+        <div class="d-flex align-items-baseline gap-2">
+            <h2 class="fw-bold mb-0 text-dark">{{ total_employees|default:0 }}</h2>
+            <span class="badge bg-success-subtle text-success small rounded-pill">+2%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-3 col-md-6">
+    <div class="card h-100 border-0 p-3">
+      <div class="card-body">
+        <div class="icon-box bg-secondary-subtle text-secondary" style="color: #a855f7 !important;">
+          <i class="fas fa-building-user"></i>
+        </div>
+        <h6 class="text-muted small fw-bold text-uppercase mb-2">Departments</h6>
+        <div class="d-flex align-items-baseline gap-2">
+            <h2 class="fw-bold mb-0 text-dark">{{ total_departments|default:0 }}</h2>
+            <span class="text-muted small">Global Units</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-3 col-md-6">
+    <div class="card h-100 border-0 p-3">
+      <div class="card-body">
+        <div class="icon-box bg-warning-subtle text-warning" style="background-color: #fef3c7 !important; color: #d97706 !important;">
+          <i class="fas fa-hourglass-half"></i>
+        </div>
+        <h6 class="text-muted small fw-bold text-uppercase mb-2">Pending Leaves</h6>
+        <div class="d-flex align-items-baseline gap-2">
+            <h2 class="fw-bold mb-0 text-dark">{{ pending_leaves|default:0 }}</h2>
+            <span class="badge bg-warning-subtle text-warning small rounded-pill">Needs Review</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-3 col-md-6">
+    <div class="card h-100 border-0 p-3">
+      <div class="card-body">
+        <div class="icon-box bg-info-subtle text-info">
+          <i class="fas fa-user-check"></i>
+        </div>
+        <h6 class="text-muted small fw-bold text-uppercase mb-2">Active Staff</h6>
+        <div class="d-flex align-items-baseline gap-2">
+            <h2 class="fw-bold mb-0 text-dark">{{ active_employees|default:0 }}</h2>
+            <span class="text-muted small">On-Site / Remote</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Main Content Grid -->
+<div class="row g-4">
+  <div class="col-lg-8">
+    <div class="card border-0 p-4 h-100">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <h5 class="fw-bold mb-1">Quick Management Control</h5>
+          <p class="text-muted small mb-0">Direct access to administrative tasks</p>
+        </div>
+        <div class="dropdown">
+          <button class="btn btn-light btn-sm rounded-3" type="button" data-bs-toggle="dropdown">
+            <i class="fas fa-ellipsis-v"></i>
+          </button>
+          <ul class="dropdown-menu border-0 shadow-sm rounded-3">
+            <li><a class="dropdown-item" href="#">Refresh Stats</a></li>
+            <li><a class="dropdown-item" href="#">Export PDF</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="row g-3">
+        <div class="col-md-4">
+          <a href="/admin/core/employee/add/" class="d-block p-4 rounded-4 text-center text-decoration-none bg-primary-subtle text-primary hover-lift transition-all">
+            <i class="fas fa-user-plus fs-2 mb-3"></i>
+            <div class="fw-bold small">Hire Employee</div>
+          </a>
+        </div>
+        <div class="col-md-4">
+          <a href="/admin/core/department/add/" class="d-block p-4 rounded-4 text-center text-decoration-none bg-info-subtle text-info hover-lift transition-all">
+            <i class="fas fa-building-circle-check fs-2 mb-3"></i>
+            <div class="fw-bold small">New Department</div>
+          </a>
+        </div>
+        <div class="col-md-4">
+          <a href="/admin/core/leaverequest/add/" class="d-block p-4 rounded-4 text-center text-decoration-none bg-warning-subtle text-warning hover-lift transition-all" style="background-color: #fef3c7 !important; color: #d97706 !important;">
+            <i class="fas fa-calendar-plus fs-2 mb-3"></i>
+            <div class="fw-bold small">Approve Leave</div>
+          </a>
+        </div>
+      </div>
+
+      <div class="mt-5">
+          <h6 class="fw-bold mb-3">Recent Activity Feed</h6>
+          <div class="d-flex gap-3 mb-3 border-start border-primary border-3 ps-3 py-1">
+              <div class="small fw-bold">10:45 AM</div>
+              <div class="small">New employee <span class="fw-bold">Sarah Connor</span> added to IT Department.</div>
+          </div>
+          <div class="d-flex gap-3 mb-3 border-start border-secondary border-3 ps-3 py-1">
+              <div class="small fw-bold">09:12 AM</div>
+              <div class="small">Leave request by <span class="fw-bold">John Wick</span> approved via Admin.</div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card border-0 p-4 h-100 bg-primary text-white position-relative overflow-hidden">
+      <!-- Decorative background elements -->
+      <div class="position-absolute translate-middle" style="top: 0; right: -50px; width: 200px; height: 200px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+      
+      <div class="position-relative z-1">
+        <h4 class="fw-bold mb-3">Enterprise Pro Features</h4>
+        <p class="opacity-75 small mb-4">Unlock advanced analytics, AI-powered scheduling, and unlimited department mapping.</p>
+        <ul class="list-unstyled small mb-5">
+            <li class="mb-2"><i class="fas fa-check-circle me-2"></i> Custom Report Builder</li>
+            <li class="mb-2"><i class="fas fa-check-circle me-2"></i> Payroll Integration</li>
+            <li><i class="fas fa-check-circle me-2"></i> Dedicated Account Manager</li>
+        </ul>
+        <button class="btn btn-white w-100 rounded-pill fw-bold text-primary py-2 mt-auto">Upgrade Now</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+    .hover-lift:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    }
+    .transition-all {
+        transition: all 0.2s ease-in-out;
+    }
+</style>
+{% endblock %}

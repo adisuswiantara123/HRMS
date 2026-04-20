@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}Leave Requests - HRMS{% endblock %}
+{% block page_title %}Leave Management{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex gap-2">
+        <div class="btn-group shadow-sm rounded-3 overflow-hidden">
+            <button class="btn btn-white border-0 px-3 py-2 active">All</button>
+            <button class="btn btn-white border-0 px-3 py-2">Pending</button>
+            <button class="btn btn-white border-0 px-3 py-2">History</button>
+        </div>
+    </div>
+    <a href="/admin/core/leaverequest/add/" class="btn btn-primary rounded-pill px-4 shadow-sm">
+        <i class="fas fa-calendar-plus me-2"></i>New Request
+    </a>
+</div>
+
+<div class="table-container animate-fade-in">
+    <table class="table align-middle mb-0">
+        <thead>
+            <tr>
+                <th>Employee</th>
+                <th>Duration</th>
+                <th>Reason</th>
+                <th>Status</th>
+                <th class="text-end">Verification</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for leave in leaves %}
+            <tr>
+                <td>
+                    <div class="fw-bold text-dark">{{ leave.employee.full_name }}</div>
+                    <div class="text-muted small">{{ leave.employee.department.name|default:"General Staff" }}</div>
+                </td>
+                <td>
+                    <div class="text-dark small fw-medium">{{ leave.start_date }} to {{ leave.end_date }}</div>
+                    <div class="text-muted smaller">Total: {{ leave.end_date|safe }}</div>
+                </td>
+                <td>
+                    <div class="text-muted small text-truncate" style="max-width: 200px;" title="{{ leave.reason }}">
+                        {{ leave.reason }}
+                    </div>
+                </td>
+                <td>
+                    <span class="badge rounded-pill px-3 py-2 
+                        {% if leave.status == 'approved' %}bg-success-subtle text-success
+                        {% elif leave.status == 'pending' %}bg-warning-subtle text-warning
+                        {% else %}bg-danger-subtle text-danger{% endif %}">
+                        {{ leave.get_status_display }}
+                    </span>
+                </td>
+                <td class="text-end">
+                    {% if leave.status == 'pending' %}
+                    <div class="d-flex justify-content-end gap-2">
+                        <button class="btn btn-success btn-sm rounded-pill px-3 shadow-sm border-0">Approve</button>
+                        <button class="btn btn-danger btn-sm rounded-pill px-3 shadow-sm border-0">Reject</button>
+                    </div>
+                    {% else %}
+                    <div class="text-muted small">Verified by {{ leave.approved_by.username|default:"System" }}</div>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="py-5 text-center">
+                    <div class="mb-3">
+                        <i class="fas fa-calendar-xmark fs-1 text-muted opacity-25"></i>
+                    </div>
+                    <h5 class="text-muted fw-normal">No leave requests found.</h5>
+                    <p class="text-muted small">All employee leave records will appear here once submitted.</p>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

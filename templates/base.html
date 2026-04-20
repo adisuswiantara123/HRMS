@@ -1,0 +1,116 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}HRMS Management{% endblock %}</title>
+    
+    <!-- Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons & Bootstrap Foundation -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
+    
+    <!-- Premium Custom Styles -->
+    <link rel="stylesheet" href="{% static 'css/modern.css' %}" />
+  </head>
+  <body>
+    <!-- Glassmorphism Sidebar -->
+    <nav class="sidebar">
+      <a href="{% url 'core:dashboard' %}" class="sidebar-logo">
+        <i class="fas fa-microchip me-2"></i>
+        <span>HRMS</span>
+      </a>
+      
+      <div class="nav flex-column mt-4">
+        <a class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}" href="{% url 'core:dashboard' %}">
+          <i class="fas fa-grid-2 shadow-sm"></i> Dashboard Overview
+        </a>
+        
+        <div class="text-uppercase text-muted small fw-bold mt-4 mb-2 ps-3" style="letter-spacing: 1px;">Management</div>
+        
+        <a class="nav-link {% if request.resolver_match.url_name == 'employee_list' %}active{% endif %}" href="{% url 'core:employee_list' %}">
+          <i class="fas fa-user-group"></i> Employees
+        </a>
+        
+        <a class="nav-link {% if request.resolver_match.url_name == 'department_list' %}active{% endif %}" href="{% url 'core:department_list' %}">
+          <i class="fas fa-sitemap"></i> Departments
+        </a>
+        
+        <a class="nav-link {% if request.resolver_match.app_name == 'leaves' %}active{% endif %}" href="{% url 'leaves:leave_list' %}">
+          <i class="fas fa-calendar-day"></i> Leave Requests
+        </a>
+
+        <div class="text-uppercase text-muted small fw-bold mt-4 mb-2 ps-3" style="letter-spacing: 1px;">System</div>
+        
+        <a class="nav-link" href="/admin/">
+          <i class="fas fa-sliders-h"></i> Configuration
+        </a>
+      </div>
+
+      <!-- User Profile at Bottom of Sidebar -->
+      <div class="mt-auto pt-5">
+        {% if user.is_authenticated %}
+        <div class="card bg-white border-0 shadow-sm p-3 rounded-4">
+          <div class="d-flex align-items-center">
+            <div class="bg-primary-subtle text-primary rounded-circle p-2 me-3">
+              <i class="fas fa-user-tie"></i>
+            </div>
+            <div class="overflow-hidden">
+              <div class="fw-bold text-truncate small">{{ user.username }}</div>
+              <div class="text-muted smaller" style="font-size: 0.7rem;">Administrator</div>
+            </div>
+          </div>
+          <a href="{% url 'logout' %}" class="btn btn-sm btn-outline-danger w-100 mt-3 rounded-3">
+            <i class="fas fa-sign-out-alt me-1"></i> Logout
+          </a>
+        </div>
+        {% else %}
+        <a href="{% url 'login' %}" class="btn btn-primary w-100 rounded-pill">
+          <i class="fas fa-sign-in-alt me-2"></i> Login
+        </a>
+        {% endif %}
+      </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main>
+      <!-- Top Header / Search Mockup -->
+      <header class="d-flex justify-content-between align-items-center mb-5 animate-fade-in">
+        <div>
+          <h5 class="text-muted fw-normal mb-1">Human Resource Management System</h5>
+          <h2 class="fw-bold">{% block page_title %}Dashboard{% endblock %}</h2>
+        </div>
+        <div class="d-flex gap-3">
+          <div class="input-group bg-white rounded-pill shadow-sm px-3 py-1 border-0">
+            <span class="input-group-text bg-transparent border-0"><i class="fas fa-search text-muted"></i></span>
+            <input type="text" class="form-control bg-transparent border-0" placeholder="Search data...">
+          </div>
+          <button class="btn btn-white shadow-sm rounded-circle p-3 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+            <i class="fas fa-bell text-primary"></i>
+          </button>
+        </div>
+      </header>
+
+      {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show border-0 shadow-sm rounded-4 mb-4" role="alert">
+          <i class="fas {% if message.tags == 'success' %}fa-check-circle{% else %}fa-info-circle{% endif %} me-2"></i>
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endfor %}
+      {% endif %}
+
+      <div class="content card-container animate-fade-in" style="animation-delay: 0.1s;">
+        {% block content %}{% endblock %}
+      </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

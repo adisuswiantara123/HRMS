@@ -1,0 +1,13 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} | HRMS Administration{% endblock %}
+
+{% block branding %}
+<div style="display: flex; align-items: center; gap: 15px;">
+    <a href="{% url 'core:dashboard' %}" style="background-color: #ffffff; color: #417690; padding: 4px 10px; border-radius: 4px; font-weight: 600; text-decoration: none; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        &larr; Kembali
+    </a>
+    <h1 id="site-name" style="margin: 0;"><a href="{% url 'admin:index' %}">HRMS Administration</a></h1>
+</div>
+{% endblock %}
+
